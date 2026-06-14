@@ -13,21 +13,30 @@ name: Build Windows Application
       runs-on: windows-latest
       steps:
         - uses: actions/checkout@v4
+
         - uses: actions/setup-node@v4
           with:
             node-version: 20
             cache: 'npm'
-        - run: npm install --legacy-peer-deps
-        - run: npm run build
+
+        - name: Install dependencies
+          run: npm install --legacy-peer-deps
+
+        - name: Build Vite
+          run: npm run build
           env:
             NODE_ENV: production
-        - run: npx electron-builder --win --publish never
+
+        - name: Build Windows installer
+          run: npx electron-builder --win --publish never
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
         - uses: actions/upload-artifact@v4
           with:
             name: MyLab-LIMS-Windows
             path: dist/*.exe
+
         - uses: softprops/action-gh-release@v2
           with:
             tag_name: "v3.0.0"

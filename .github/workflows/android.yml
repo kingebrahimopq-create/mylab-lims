@@ -54,11 +54,11 @@ name: Build Android APK
         - uses: softprops/action-gh-release@v2
           with:
             tag_name: "v3.0.0"
-            name: "MyLab LIMS v3.0.0"
+            name: "MyLab LIMS v3.0.0 - Native Google Sign-in"
             body: |
-              ## ✅ Google Sign-in مُصلح بالكامل
-              - Android: Chrome Custom Tabs عبر @capacitor-firebase/authentication
-              - Web: signInWithPopup مباشر
+              ## Google Sign-in مُصلح
+              - Android: @capacitor-firebase/authentication (Chrome Custom Tabs)
+              - Web: signInWithPopup
               - Windows: Electron OAuth
             draft: false
             prerelease: false
