@@ -1,65 +1,63 @@
 name: Build Android APK
 
-  on:
-    push:
-      branches: ["main"]
-    workflow_dispatch:
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
 
-  permissions:
-    contents: write
+permissions:
+  contents: write
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-        - uses: actions/setup-node@v4
-          with:
-            node-version: 20
-            cache: npm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-        - name: Install dependencies
-          run: npm install --legacy-peer-deps
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
 
-        - name: Build Vite
-          run: npm run build
-          env:
-            NODE_ENV: production
+      - name: Build Vite
+        run: npm run build
+        env:
+          NODE_ENV: production
 
-        - uses: actions/setup-java@v4
-          with:
-            java-version: "17"
-            distribution: temurin
-            cache: gradle
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: temurin
+          cache: gradle
 
-        - name: Add Android platform
-          run: |
-            if [ ! -d "android" ]; then npx cap add android; fi
+      - name: Add Android platform
+        run: |
+          if [ ! -d "android" ]; then npx cap add android; fi
 
-        - name: Capacitor sync
-          run: npx cap sync android
+      - name: Capacitor sync
+        run: npx cap sync android
 
-        - name: Build APK
-          working-directory: android
-          run: |
-            chmod +x gradlew
-            ./gradlew assembleDebug --no-daemon
+      - name: Build APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
 
-        - uses: actions/upload-artifact@v4
-          with:
-            name: MyLab-LIMS-Android
-            path: android/app/build/outputs/apk/debug/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MyLab-LIMS-Android
+          path: android/app/build/outputs/apk/debug/app-debug.apk
 
-        - uses: softprops/action-gh-release@v2
-          with:
-            tag_name: v3.0.0
-            name: MyLab LIMS v3.0.0
-            body: |
-              Google Sign-in fixed on Android via @capacitor-firebase/authentication
-            draft: false
-            prerelease: false
-            files: android/app/build/outputs/apk/debug/app-debug.apk
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v3.0.0
+          name: MyLab LIMS v3.0.0
+          body: Google Sign-in fixed - uses @capacitor-firebase/authentication on Android
+          draft: false
+          prerelease: false
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

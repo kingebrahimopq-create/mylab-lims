@@ -1,46 +1,45 @@
 name: Build Windows Application
 
-  on:
-    push:
-      branches: ["main"]
-    workflow_dispatch:
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
 
-  permissions:
-    contents: write
+permissions:
+  contents: write
 
-  jobs:
-    build:
-      runs-on: windows-latest
-      steps:
-        - uses: actions/checkout@v4
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
 
-        - uses: actions/setup-node@v4
-          with:
-            node-version: 20
-            cache: npm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-        - name: Install dependencies
-          run: npm install --legacy-peer-deps
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
 
-        - name: Build Vite
-          run: npm run build
-          env:
-            NODE_ENV: production
+      - name: Build Vite
+        run: npm run build
+        env:
+          NODE_ENV: production
 
-        - name: Build Windows installer
-          run: npx electron-builder --win --publish never
-          env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Windows installer
+        run: npx electron-builder --win --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        - uses: actions/upload-artifact@v4
-          with:
-            name: MyLab-LIMS-Windows
-            path: dist/*.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MyLab-LIMS-Windows
+          path: dist/*.exe
 
-        - uses: softprops/action-gh-release@v2
-          with:
-            tag_name: v3.0.0
-            files: dist/*.exe
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v3.0.0
+          files: dist/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
