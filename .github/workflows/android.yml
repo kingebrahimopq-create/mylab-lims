@@ -17,7 +17,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
@@ -55,7 +54,7 @@ jobs:
         with:
           tag_name: v3.0.0
           name: MyLab LIMS v3.0.0
-          body: Google Sign-in fixed - uses @capacitor-firebase/authentication on Android
+          body: Google Sign-in fixed via @capacitor-firebase/authentication
           draft: false
           prerelease: false
           files: android/app/build/outputs/apk/debug/app-debug.apk
