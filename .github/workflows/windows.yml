@@ -2,7 +2,7 @@ name: Build Windows Application
 
   on:
     push:
-      branches: [ "main" ]
+      branches: ["main"]
     workflow_dispatch:
 
   permissions:
@@ -17,7 +17,7 @@ name: Build Windows Application
         - uses: actions/setup-node@v4
           with:
             node-version: 20
-            cache: 'npm'
+            cache: npm
 
         - name: Install dependencies
           run: npm install --legacy-peer-deps
@@ -39,7 +39,7 @@ name: Build Windows Application
 
         - uses: softprops/action-gh-release@v2
           with:
-            tag_name: "v3.0.0"
+            tag_name: v3.0.0
             files: dist/*.exe
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
