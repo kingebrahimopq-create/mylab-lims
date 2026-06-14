@@ -1,0 +1,42 @@
+{
+  "appId": "com.mylab.lims",
+  "productName": "My Lab LIMS",
+  "directories": {
+    "output": "dist-electron"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "package.json",
+    "public/**/*"
+  ],
+  "win": {
+    "target": ["nsis"]
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "My Lab LIMS",
+    "displayLanguageSelector": true,
+    "multiLanguageInstaller": true
+  },
+  "portable": {
+    "artifactName": "MyLab-LIMS-Portable-${version}.${ext}"
+  },
+  "mac": {
+    "target": ["dmg", "zip"]
+  },
+  "linux": {
+    "target": ["AppImage", "deb"]
+  },
+  "extraResources": [
+    {
+      "from": "public/",
+      "to": "public/",
+      "filter": ["**/*"]
+    }
+  ],
+  "publish": null
+}
