@@ -5,10 +5,13 @@ import './index.css';
 import './tailwind.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </StrictMode>,
-);
+const rootEl = document.getElementById('root');
+if (rootEl) {
+  createRoot(rootEl).render(
+    <StrictMode>
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    </StrictMode>,
+  );
+}
