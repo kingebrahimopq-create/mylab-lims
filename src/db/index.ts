@@ -1,2 +1,2 @@
-export * from './database-adapter';
 export * from './storage';
+export * from './database-adapter';
