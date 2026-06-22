@@ -175,7 +175,7 @@ export default function AdminPortal({
     setTimeout(() => {
       const p = aiPermPrompt.toLowerCase();
       let updatedPerms = [...settings.receptionPermissions];
-      let actionsText = [];
+      let actionsText: string[] = [];
 
       if (p.includes('منع') || p.includes('إلغاء') || p.includes('تعطيل') || p.includes('إيقاف') || p.includes('حظر') || p.includes('منعه')) {
         if (p.includes('فواتير') || p.includes('فاتورة') || p.includes('دفع') || p.includes('تحصيل') || p.includes('مالي') || p.includes('فواتيرها')) {
